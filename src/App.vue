@@ -28,7 +28,7 @@
 import icons from './assets/icons.json';
 
 export default {
-  name: "VIcons",
+  name: "vue-hicons",
 
   props: {
     clipRule: {
