@@ -2,16 +2,21 @@
   "name": "v-icons",
   "version": "0.1.0",
   "private": true,
+  "description": "## Project setup ``` npm install ```",
+  "author": "ArielOnoriaga",
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint"
   },
+  "main": "src/main.js",
   "dependencies": {
     "core-js": "^3.6.5",
+    "tailwindcss": "^1.1.2",
     "vue": "^2.6.11"
   },
   "devDependencies": {
+    "@ianaya89/vue-cli-plugin-tailwind": "~1.1.0",
     "@vue/cli-plugin-babel": "~4.5.0",
     "@vue/cli-plugin-eslint": "~4.5.0",
     "@vue/cli-service": "~4.5.0",
@@ -39,8 +44,5 @@
     "last 2 versions",
     "not dead"
   ],
-  "description": "## Project setup ``` npm install ```",
-  "main": "src/main.js",
-  "author": "ArielOnoriaga",
   "license": "MIT"
 }
