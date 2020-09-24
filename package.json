@@ -1,7 +1,6 @@
 {
   "name": "v-icons",
   "version": "0.1.0",
-  "private": true,
   "description": "## Project setup ``` npm install ```",
   "author": "ArielOnoriaga",
   "scripts": {
