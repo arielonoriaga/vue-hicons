@@ -136,7 +136,9 @@ export default {
         .split(`path1":"`)[1]
         .split(`","path2":"`);
 
-      this.clipRuleData = (this.name == "volume_off") ? "evenodd" : this.clipRule;
+      this.clipRuleData = (this.name == "volume_off")
+        ? "evenodd"
+        : this.clipRule;
 
       return {
         "path1": paths[0],
