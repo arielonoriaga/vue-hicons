@@ -26,6 +26,7 @@ export default {
 ### Usage guide
 
 | Prop | Type | Default | Required |
+| ---- | ---- | ------- | -------- |
 | class-icon | String | - | false |
 | clip-rule | String | nonzero | false |
 | fill-color | String | none | false |
