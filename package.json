@@ -1,8 +1,15 @@
 {
   "name": "vue-hicons",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "## Project setup ``` npm i -s vue-hicons ```",
   "author": "Ariel Onoriaga",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ArielOnoriaga/vue-hicons"
+  },
+  "bugs": {
+      "url": "https://github.com/ArielOnoriaga/vue-hicons/issues"
+  },
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
