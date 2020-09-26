@@ -1,30 +1,29 @@
 <template>
-  <div id="app">
-    <svg
-      :stroke-width="strokeWidth"
-      :class="classIconFinal"
-      :fill="fillColor"
-      :stroke="strokeColor"
-      :viewBox="viewBox"
-      stroke-linecap="round"
-      stroke-linejoin="round"
-    >
+  <svg
+    :stroke-width="strokeWidth"
+    :class="classIconFinal"
+    :fill="fillColor"
+    :stroke="strokeColor"
+    :viewBox="viewBox"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+  >
 
-      <path
-        :d="icon.path1"
-        :fillRule="fillRule"
-        :clip-rule="clipRuleData"
-      />
+    <path
+      :d="icon.path1"
+      :fillRule="fillRule"
+      :clip-rule="clipRuleData"
+    />
 
-      <path
-        v-if="doublePath"
-        :d="icon.path2"
-      />
-    </svg>
-  </div>
+    <path
+      v-if="doublePath"
+      :d="icon.path2"
+    />
+  </svg>
 </template>
 
 <script>
+import './assets/css/tailwind.css'
 import icons from './assets/icons.json';
 
 export default {

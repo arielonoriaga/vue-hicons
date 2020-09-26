@@ -1,10 +1,25 @@
-import Vue from 'vue';
-import App from './App.vue';
+import VueHicons from "./VueHicons.vue";
 
-import './assets/css/tailwind.css';
+function install(Vue) {
+  if (install.installed) return;
+  install.installed = true;
+  Vue.component("Vue-Hicons", VueHicons);
+}
 
-Vue.config.productionTip = false;
+const plugin = {
+  install
+};
 
-new Vue({
-  render: h => h(App),
-}).$mount('#app');
+let GlobalVue = null;
+if (typeof window !== "undefined") {
+  GlobalVue = window.Vue;
+} else if (typeof global !== "undefined") {
+  GlobalVue = global.vue;
+}
+if (GlobalVue) {
+  GlobalVue.use(plugin);
+}
+
+VueHicons.install = install;
+
+export default VueHicons;
