@@ -39,7 +39,6 @@ export default {
 | stroke-width | Number | 2 | false |
 | view-box | String | 0 0 24 24 | false |
 | width-icon | Number | 4 | false |
-| ---- | ---- | ---- | ---- |
 
 
 ### Caution
