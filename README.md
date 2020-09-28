@@ -34,9 +34,15 @@ export default {
 | height-icon | Number | - | false |
 | name | String | x | true |
 | stroke-color | String | #000 | false |
+| stroke-linecap | String | round | false |
+| stroke-linejoin | String | round | false |
 | stroke-width | Number | 2 | false |
 | view-box | String | 0 0 24 24 | false |
 | width-icon | Number | 4 | false |
+| ---- | ---- | ---- | ---- |
+
+
+### Caution
 
 If the name of the icon contains a - \(hyphen\) it must be called with _ \(underscore\)
 
