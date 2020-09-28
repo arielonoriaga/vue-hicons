@@ -82,12 +82,12 @@ export default {
 
     strokeLinecap: {
       type: String,
-      default: round
+      default: "round"
     },
 
     strokeLinejoin: {
       type: String,
-      default: round
+      default: "round"
     }
   },
 

@@ -45,7 +45,7 @@ example:
 ```
   arrow-left -> arrow_left
 
-  <VueHicons name="arrow_left"> || <Vue-Hicons name="arrow_left">
+  <VueHicons name="arrow_left">
 ```
 
 
