@@ -5,8 +5,8 @@
     :fill="fillColor"
     :stroke="strokeColor"
     :viewBox="viewBox"
-    stroke-linecap="round"
-    stroke-linejoin="round"
+    :stroke-linecap="strokeLinecap"
+    :stroke-linejoin="strokeLinejoin"
   >
 
     <path
@@ -79,6 +79,16 @@ export default {
       type: Number,
       default: 4
     },
+
+    strokeLinecap: {
+      type: String,
+      default: round
+    },
+
+    strokeLinejoin: {
+      type: String,
+      default: round
+    }
   },
 
   data() {
