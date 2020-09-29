@@ -23,11 +23,11 @@
 </template>
 
 <script>
-import './assets/css/tailwind.css'
+import './assets/css/tailwind.css';
 import icons from './assets/icons.json';
 
 export default {
-  name: "vue-hicons",
+  name: "VueHicons",
 
   props: {
     clipRule: {
@@ -136,7 +136,11 @@ export default {
 
     clipRuleData() {
       return this.name == "volume_off" ? "evenodd" : this.clipRule;
-     }
+    },
+
+    stringIconsJSON() {
+      return JSON.stringify(this.icons);
+    }
   },
 
   mounted() {
@@ -144,18 +148,31 @@ export default {
   },
 
   methods: {
-    icosSinDoblePath() {
-      let ico = !this.filled
-        ? JSON.stringify(this.icons).split(`"${this.name}":"`)[1].split('"')[0]
-        : JSON.stringify(this.icons).split(`"filled":{"`)[1].split(`"${this.name}":"`)[1].split('"')[0];
+    buildIcon() {
+      if (!this.iconsWithDoublePath.includes(`${this.name}`) && !this.filled) {
+        this.icon.path1 = this.icosSinDoblePath();
 
-      return ico;
+      } else if (this.iconsWithDoublePath.includes(`${this.name}`) && !this.filled) {
+        this.buildIconDoublePath();
+
+      } else if (!this.filledIconsWithDoublePath.includes(`${this.name}`) && this.filled) {
+        this.icon.path1 = this.icosSinDoblePathFilled();
+
+      } else {
+        this.buildIconDoublePathFilled();
+      }
+    },
+
+    icosSinDoblePath() {
+      return this.stringIconsJSON.split(`"${this.name}":"`)[1].split('"')[0];
+    },
+
+    icosSinDoblePathFilled() {
+      return this.stringIconsJSON.split(`"filled":{`)[1].split(`"${this.name}":"`)[1].split('","')[0];
     },
 
     icosWithDoublePath() {
-      let paths = !this.filled
-        ? JSON.stringify(this.icons).split(`"${this.name}":{`)[1].split(`},"`)[0].split(`path1":"`)[1].split(`","path2":"`)
-        : JSON.stringify(this.icons).split(`"filled":{"`)[1].split(`"${this.name}":{`)[1].split('},"')[0].split('path1":"')[1].split(`","path2":"`);
+      let paths = this.stringIconsJSON.split(`"${this.name}":{`)[1].split(`},"`)[0].split(`path1":"`)[1].split(`","path2":"`);
 
       return {
         "path1": paths[0],
@@ -163,22 +180,31 @@ export default {
       };
     },
 
-    buildIcon() {
-      if (!this.iconsWithDoublePath.includes(`${this.name}`) && !this.filledIconsWithDoublePath.includes(`${this.name}`)) {
-        this.icon.path1 = this.icosSinDoblePath();
+    icosWithDoublePathFilled() {
+      let paths = this.stringIconsJSON.split(`"filled":{`)[1].split(`"${this.name}":{`)[1].split('},"')[0].split('path1":"')[1].split(`","path2":"`);
 
-      } else {
-        this.buildIconDoublePath();
-      }
+      return {
+        "path1": paths[0],
+        "path2": paths[1].split(`"`)[0]
+      };
     },
 
     buildIconDoublePath() {
-        this.doublePath = true;
+      this.doublePath = true;
 
-        let temporalJSONWithDoblePath = this.icosWithDoublePath();
+      let temporalJSONWithDoblePath = this.icosWithDoublePath();
 
-        this.icon.path1 = temporalJSONWithDoblePath.path1;
-        this.icon.path2 = temporalJSONWithDoblePath.path2;
+      this.icon.path1 = temporalJSONWithDoblePath.path1;
+      this.icon.path2 = temporalJSONWithDoblePath.path2;
+    },
+
+    buildIconDoublePathFilled() {
+      this.doublePath = true;
+
+      let temporalJSONWithDoblePath = this.icosWithDoublePathFilled();
+
+      this.icon.path1 = temporalJSONWithDoblePath.path1;
+      this.icon.path2 = temporalJSONWithDoblePath.path2;
     }
   }
 };

@@ -51,7 +51,7 @@ describe('VueHicons', () => {
     });
   });
 
-  describe("methods", () => {
+  describe("methods outline", () => {
     it("buildIcon simple path", () => {
       wrapper.setProps({
         name: 'adjustments',
@@ -101,6 +101,47 @@ describe('VueHicons', () => {
 
       expect(wrapper.vm.icosWithDoublePath().path2)
         .toBe(icons.cog.path2);
+    });
+  });
+
+  describe("methods filled", () => {
+    beforeEach(() => {
+      wrapper.setProps({
+        filled:true
+      });
+
+      iconsComponent.computed.stringIconsJSON.call(wrapper.vm);
+    });
+
+    it("build icon single path filled", () => {
+      wrapper.setProps({
+        name: "adjustments",
+      });
+
+      wrapper.vm.buildIcon();
+
+      expect(wrapper.vm.$data.icon.path1)
+        .toBe(icons.filled.adjustments);
+
+      expect(wrapper.vm.icosSinDoblePathFilled())
+        .toBe(icons.filled.adjustments);
+    });
+
+    it("build icon double path filled", () => {
+      wrapper.setProps({
+        name: "archive",
+      });
+
+      wrapper.vm.buildIcon();
+
+      expect(wrapper.vm.$data.doublePath)
+        .toBeTruthy();
+
+      expect(wrapper.vm.icosWithDoublePath().path1)
+        .toBe(icons.filled.archive.path1);
+
+      expect(wrapper.vm.icosWithDoublePath().path2)
+        .toBe(icons.filled.archive.path2);
     });
   });
 });
