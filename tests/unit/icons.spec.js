@@ -1,19 +1,21 @@
 import { shallowMount } from '@vue/test-utils';
-import app from '@/app.vue';
+import iconsComponent from '@/VueHicons';
 
 import iconsJSON from "@/assets/icons.json";
-
 const icons = iconsJSON;
-describe('icons.vue', () => {
-  const wrapper = shallowMount(app, {
+
+describe('VueHicons', () => {
+  const wrapper = shallowMount(iconsComponent, {
     propsData: {
-      name: 'x'
+      name: 'x',
+      filled: false
     }
   });
 
   beforeEach(() => {
     wrapper.setProps({
-      name: 'x'
+      name: 'x',
+      filled: false
     });
   });
 
@@ -24,43 +26,50 @@ describe('icons.vue', () => {
 
   describe("computeds", () => {
     it("iconNameClass basic", () => {
-      expect(app.computed.iconNameClass.call(wrapper.vm))
+      expect(iconsComponent.computed.iconNameClass.call(wrapper.vm))
         .toBe('x');
     });
 
     it("classIconFinal", () => {
-      expect(app.computed.classIconFinal.call(wrapper.vm))
+      expect(iconsComponent.computed.classIconFinal.call(wrapper.vm))
         .toBe('x  w-4');
     });
 
-    it("classIconFinal with other width and class", () => {
+    it("classIconFinal with other width and class", async () => {
       wrapper.setProps({
         name: "arrow_left",
+        filled: false,
         classIcon: "bg-red-200",
         widthIcon: "6",
         heightIcon: "6"
       });
 
-      wrapper.vm.buildIcon();
+      await wrapper.vm.$nextTick();
 
-      expect(app.computed.classIconFinal.call(wrapper.vm))
+      expect(iconsComponent.computed.classIconFinal.call(wrapper.vm))
         .toBe('arrow-left bg-red-200 w-6 h-6');
     });
   });
 
   describe("methods", () => {
     it("buildIcon simple path", () => {
+      wrapper.setProps({
+        name: 'adjustments',
+        filled: false
+      });
+
       wrapper.vm.buildIcon();
 
       expect(wrapper.vm.$data.icon.path1)
-        .toBe(icons.x);
+        .toBe(icons.adjustments);
 
       expect(wrapper.vm.icosSinDoblePath())
-        .toBe(icons.x);
+        .toBe(icons.adjustments);
     });
 
     it("buildIcon double path", () => {
       wrapper.setProps({
+        filled: false,
         name: "volume_off"
       });
 
@@ -78,7 +87,8 @@ describe('icons.vue', () => {
 
     it("double path", () => {
       wrapper.setProps({
-        name: "cog"
+        name: "cog",
+        filled: false,
       });
 
       wrapper.vm.buildIcon();
@@ -86,10 +96,10 @@ describe('icons.vue', () => {
       expect(wrapper.vm.$data.doublePath)
         .toBeTruthy();
 
-      expect(wrapper.vm.icosConDoblePath().path1)
+      expect(wrapper.vm.icosWithDoublePath().path1)
         .toBe(icons.cog.path1);
 
-      expect(wrapper.vm.icosConDoblePath().path2)
+      expect(wrapper.vm.icosWithDoublePath().path2)
         .toBe(icons.cog.path2);
     });
   });

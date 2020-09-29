@@ -40,6 +40,11 @@ export default {
       required: true
     },
 
+    filled: {
+      type: Boolean,
+      default: false
+    },
+
     fillColor: {
       type: String,
       default: "none"
@@ -112,7 +117,9 @@ export default {
         "truck",
         "volume_off"
       ],
-      clipRuleData: 'nonzero'
+      filledIconsWithDoublePath: [
+        "archive"
+      ],
     };
   },
 
@@ -125,7 +132,11 @@ export default {
       return (this.heightIcon == 4)
         ? `${this.iconNameClass} ${this.classIcon} w-${this.widthIcon}`
         : `${this.iconNameClass} ${this.classIcon} w-${this.widthIcon} h-${this.heightIcon}`;
-    }
+    },
+
+    clipRuleData() {
+      return this.name == "volume_off" ? "evenodd" : this.clipRule;
+     }
   },
 
   mounted() {
@@ -134,20 +145,17 @@ export default {
 
   methods: {
     icosSinDoblePath() {
-      let ico = (JSON.stringify(this.icons).split(`"${this.name}":"`));
-      return ico[1].split('"')[0];
+      let ico = !this.filled
+        ? JSON.stringify(this.icons).split(`"${this.name}":"`)[1].split('"')[0]
+        : JSON.stringify(this.icons).split(`"filled":{"`)[1].split(`"${this.name}":"`)[1].split('"')[0];
+
+      return ico;
     },
 
-    icosConDoblePath() {
-      let paths = (((JSON.stringify(this.icons)
-        .split(`${this.name}":{`))[1])
-        .split(`},"`)[0])
-        .split(`path1":"`)[1]
-        .split(`","path2":"`);
-
-      this.clipRuleData = (this.name == "volume_off")
-        ? "evenodd"
-        : this.clipRule;
+    icosWithDoublePath() {
+      let paths = !this.filled
+        ? JSON.stringify(this.icons).split(`"${this.name}":{`)[1].split(`},"`)[0].split(`path1":"`)[1].split(`","path2":"`)
+        : JSON.stringify(this.icons).split(`"filled":{"`)[1].split(`"${this.name}":{`)[1].split('},"')[0].split('path1":"')[1].split(`","path2":"`);
 
       return {
         "path1": paths[0],
@@ -156,17 +164,24 @@ export default {
     },
 
     buildIcon() {
-      if (!this.iconsWithDoublePath.includes(`${this.name}`)) {
+      if (!this.iconsWithDoublePath.includes(`${this.name}`) && !this.filledIconsWithDoublePath.includes(`${this.name}`)) {
         this.icon.path1 = this.icosSinDoblePath();
 
       } else {
+        this.buildIconDoublePath();
+      }
+    },
+
+    buildIconDoublePath() {
         this.doublePath = true;
 
-        let temporalJSONWithDoblePath = this.icosConDoblePath();
+        let temporalJSONWithDoblePath = this.icosWithDoublePath();
+
         this.icon.path1 = temporalJSONWithDoblePath.path1;
         this.icon.path2 = temporalJSONWithDoblePath.path2;
-      }
     }
   }
 };
+
+// ".*-.*": REGEX TO SEARCH ANY -
 </script>
