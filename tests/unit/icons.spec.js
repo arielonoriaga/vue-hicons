@@ -129,7 +129,8 @@ describe('VueHicons', () => {
 
     it("build icon double path filled", () => {
       wrapper.setProps({
-        name: "archive",
+        name: "currency_dollar",
+        filled: true
       });
 
       wrapper.vm.buildIcon();
@@ -138,10 +139,10 @@ describe('VueHicons', () => {
         .toBeTruthy();
 
       expect(wrapper.vm.icosWithDoublePath().path1)
-        .toBe(icons.filled.archive.path1);
+        .toBe(icons.filled.currency_dollar.path1);
 
       expect(wrapper.vm.icosWithDoublePath().path2)
-        .toBe(icons.filled.archive.path2);
+        .toBe(icons.filled.currency_dollar.path2);
     });
   });
 
