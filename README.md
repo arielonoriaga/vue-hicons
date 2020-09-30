@@ -29,6 +29,7 @@ export default {
 | ---- | ---- | ------- | -------- |
 | class-icon | String | - | false |
 | clip-rule | String | nonzero | false |
+| filled | Boolean | false | false |
 | fill-color | String | none | false |
 | fill-rule | String | nonzero | false |
 | height-icon | Number | - | false |
