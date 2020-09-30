@@ -190,7 +190,6 @@ export default {
 
   methods: {
     buildIcon() {
-      console.log(this.name, this.iconsWithDoublePath.includes(`${this.name}`), this.filled, this.filledIconsWithTriplePaths.includes(`${this.name}`));
       if (!this.iconsWithDoublePath.includes(`${this.name}`) && !this.filled && !this.filledIconsWithTriplePaths.includes(`${this.name}`)) {
         this.icon.path1 = this.icosSinDoblePath();
 
@@ -259,7 +258,6 @@ export default {
     buildIconDoublePathFilled() {
       this.doublePath = true;
 
-      console.log(this.name);
       let temporalJSONWithDoblePath = this.icosWithDoublePathFilled();
 
       this.icon.path1 = temporalJSONWithDoblePath.path1;
