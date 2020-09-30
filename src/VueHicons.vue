@@ -11,7 +11,7 @@
 
     <path
       :d="icon.path1"
-      :fillRule="fillRule"
+      :fill-rule="fillRule"
       :clip-rule="clipRuleData"
     />
 
