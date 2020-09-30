@@ -18,6 +18,8 @@
     <path
       v-if="doublePath || isTriplePath"
       :d="icon.path2"
+      :fill-rule="fillRulePath2"
+      :clip-rule="clipRulePath2"
     />
 
     <path
@@ -38,6 +40,16 @@ export default {
     clipRule: {
       type: String,
       default: 'nonzero'
+    },
+
+    fillRulePath2: {
+      type: String,
+      default: ''
+    },
+
+    clipRulePath2: {
+      type: String,
+      default: ''
     },
 
     name: {
