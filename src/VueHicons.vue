@@ -16,8 +16,13 @@
     />
 
     <path
-      v-if="doublePath"
+      v-if="doublePath || isTriplePath"
       :d="icon.path2"
+    />
+
+    <path
+      v-if="isTriplePath"
+      :d="icon.path3"
     />
   </svg>
 </template>
@@ -99,6 +104,7 @@ export default {
   data() {
     return {
       doublePath: false,
+      isTriplePath: false,
       icon: {
         "path1": '',
         "path2": ''
@@ -151,6 +157,10 @@ export default {
         "zoom_in",
         "zoom_out"
       ],
+      filledIconsWithTriplePaths: [
+        "database",
+        "finger_print"
+      ]
     };
   },
 
@@ -180,30 +190,41 @@ export default {
 
   methods: {
     buildIcon() {
-      if (!this.iconsWithDoublePath.includes(`${this.name}`) && !this.filled) {
+      if (!this.iconsWithDoublePath.includes(`${this.name}`) && !this.filled && !this.filledIconsWithTriplePaths.includes(`${this.name}`)) {
         this.icon.path1 = this.icosSinDoblePath();
 
-      } else if (this.iconsWithDoublePath.includes(`${this.name}`) && !this.filled) {
+      } else if (this.iconsWithDoublePath.includes(`${this.name}`) && !this.filled && !this.filledIconsWithTriplePaths.includes(`${this.name}`)) {
         this.buildIconDoublePath();
 
-      } else if (!this.filledIconsWithDoublePath.includes(`${this.name}`) && this.filled) {
+      } else if (!this.filledIconsWithDoublePath.includes(`${this.name}`) && this.filled && !this.filledIconsWithTriplePaths.includes(`${this.name}`)) {
         this.icon.path1 = this.icosSinDoblePathFilled();
 
-      } else {
+      } else if (this.filledIconsWithDoublePath.includes(`${this.name}`)  && this.filled && !this.filledIconsWithTriplePaths.includes(`${this.name}`)) {
         this.buildIconDoublePathFilled();
+
+      } else if (!this.filledIconsWithDoublePath.includes(`${this.name}`) && this.filled && this.filledIconsWithTriplePaths.includes(`${this.name}`)) {
+        this.buildIconTriplePathFilled();
       }
     },
 
     icosSinDoblePath() {
-      return this.stringIconsJSON.split(`"${this.name}":"`)[1].split('"')[0];
+      return this.stringIconsJSON
+        .split(`"${this.name}":"`)[1]
+        .split('"')[0];
     },
 
     icosSinDoblePathFilled() {
-      return this.stringIconsJSON.split(`"filled":{`)[1].split(`"${this.name}":"`)[1].split('","')[0];
+      return this.stringIconsJSON
+        .split(`"filled":{`)[1]
+        .split(`"${this.name}":"`)[1]
+        .split('","')[0];
     },
 
     icosWithDoublePath() {
-      let paths = this.stringIconsJSON.split(`"${this.name}":{`)[1].split(`},"`)[0].split(`path1":"`)[1].split(`","path2":"`);
+      let paths = this.stringIconsJSON
+        .split(`"${this.name}":{`)[1]
+        .split(`},"`)[0].split(`path1":"`)[1]
+        .split(`","path2":"`);
 
       return {
         "path1": paths[0],
@@ -212,7 +233,12 @@ export default {
     },
 
     icosWithDoublePathFilled() {
-      let paths = this.stringIconsJSON.split(`"filled":{`)[1].split(`"${this.name}":{`)[1].split('},"')[0].split('path1":"')[1].split(`","path2":"`);
+      let paths = this.stringIconsJSON
+        .split(`"filled":{`)[1]
+        .split(`"${this.name}":{`)[1]
+        .split('},"')[0]
+        .split('path1":"')[1]
+        .split(`","path2":"`);
 
       return {
         "path1": paths[0],
@@ -236,6 +262,31 @@ export default {
 
       this.icon.path1 = temporalJSONWithDoblePath.path1;
       this.icon.path2 = temporalJSONWithDoblePath.path2;
+    },
+
+    icosWithTriplePathFilled() {
+      let paths = this.stringIconsJSON
+        .split(`"filled":{`)[1]
+        .split(`"${this.name}":{`)[1]
+        .split('},"')[0]
+        .split('path1":"')[1]
+        .split(`","path2":"`);
+
+      return {
+        "path1": paths[0],
+        "path2": paths[1].split(`"`)[0],
+        "path3": paths[1].split('","path3":"')[1].split('"')[0]
+      };
+    },
+
+    buildIconTriplePathFilled() {
+      this.isTriplePath = true;
+
+      let temporalJSONWithDoblePath = this.icosWithTriplePathFilled();
+
+      this.icon.path1 = temporalJSONWithDoblePath.path1;
+      this.icon.path2 = temporalJSONWithDoblePath.path2;
+      this.icon.path3 = temporalJSONWithDoblePath.path3;
     }
   }
 };

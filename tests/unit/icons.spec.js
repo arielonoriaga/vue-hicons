@@ -144,4 +144,24 @@ describe('VueHicons', () => {
         .toBe(icons.filled.archive.path2);
     });
   });
+
+  describe("Triple Path", () => {
+    it("icon database", () => {
+      wrapper.setProps({
+        name: "database",
+        filled: true
+      });
+
+      wrapper.vm.buildIcon();
+
+      expect(wrapper.vm.icosWithTriplePathFilled().path1)
+        .toBe(icons.filled.database.path1);
+
+      expect(wrapper.vm.icosWithTriplePathFilled().path2)
+        .toBe(icons.filled.database.path2);
+
+      expect(wrapper.vm.icosWithTriplePathFilled().path3)
+        .toBe(icons.filled.database.path3);
+    });
+  });
 });
