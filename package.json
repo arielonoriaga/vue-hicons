@@ -1,6 +1,6 @@
 {
   "name": "vue-hicons",
-  "version": "1.1.8",
+  "version": "1.1.9",
   "description": "## Project setup ``` npm i -s vue-hicons@latest ```",
   "author": "Ariel Onoriaga",
   "repository": {
@@ -78,5 +78,12 @@
     "last 2 versions",
     "not dead"
   ],
-  "license": "MIT"
+  "license": "MIT",
+  "keywords": [
+    "vue",
+    "jest",
+    "heroicons",
+    "tailwindcss",
+    "tailwindui"
+  ]
 }
