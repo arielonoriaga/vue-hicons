@@ -1,25 +1,25 @@
 <template>
   <svg
-    :stroke-width="strokeWidth"
+    :stroke-width="(!filled || strokeWidth !== 2) ? strokeWidth : 0"
+    :fill="(!filled || fillColor !== 'none') ? fillColor : 'currentColor'"
+    :viewBox="(!filled || viewBox !== '0 0 24 24') ? viewBox : '0 0 20 20'"
     :class="classIconFinal"
-    :fill="fillColor"
     :stroke="strokeColor"
-    :viewBox="viewBox"
     :stroke-linecap="strokeLinecap"
     :stroke-linejoin="strokeLinejoin"
   >
 
     <path
       :d="icon.path1"
-      :fill-rule="fillRule"
-      :clip-rule="clipRuleData"
+      :fill-rule="(!filled || fillRule !== 'nonzero') ? fillRule : 'evenodd'"
+      :clip-rule="(!filled || clipRuleData !== 'nonzero') ? clipRuleData : 'nonzero'"
     />
 
     <path
       v-if="doublePath || isTriplePath"
       :d="icon.path2"
-      :fill-rule="fillRulePath2"
-      :clip-rule="clipRulePath2"
+      :fill-rule="((!filled && filledIconsWithDoublePath.includes(name)) ||  fillRulePath2 !== '') ? fillRulePath2 : 'evenodd'"
+      :clip-rule="((!filled && filledIconsWithDoublePath.includes(name)) ||  clipRulePath2 !== '') ? clipRulePath2 : 'evenodd'"
     />
 
     <path
@@ -64,7 +64,7 @@ export default {
 
     fillColor: {
       type: String,
-      default: "none"
+      default: 'none'
     },
 
     fillRule: {
@@ -84,7 +84,7 @@ export default {
 
     strokeColor: {
       type: String,
-      default: "currentColor"
+      default: 'currentColor'
     },
 
     strokeWidth: {
@@ -104,12 +104,12 @@ export default {
 
     strokeLinecap: {
       type: String,
-      default: "round"
+      default: 'round'
     },
 
     strokeLinejoin: {
       type: String,
-      default: "round"
+      default: 'round'
     }
   },
 
@@ -118,60 +118,60 @@ export default {
       doublePath: false,
       isTriplePath: false,
       icon: {
-        "path1": '',
-        "path2": ''
+        'path1': '',
+        'path2': ''
       },
       icons: icons,
       iconsWithDoublePath: [
-        "chart_pie",
-        "chevron_double_right",
-        "chip",
-        "cog",
-        "eye",
-        "fire",
-        "location_marker",
-        "play",
-        "stop",
-        "truck",
-        "volume_off"
+        'chart_pie',
+        'chevron_double_right',
+        'chip',
+        'cog',
+        'eye',
+        'fire',
+        'location_marker',
+        'play',
+        'stop',
+        'truck',
+        'volume_off'
       ],
       filledIconsWithDoublePath: [
-        "archive",
-        "briefcase",
-        "chat_alt2",
-        "chevron_double_right",
-        "chip",
-        "clipboard",
-        "clipboard_check",
-        "clipboard_copy",
-        "clipboard_list",
-        "credit_card",
-        "currency_dollar",
-        "document_duplicate",
-        "document_search",
-        "duplicate",
-        "external_link",
-        "eye",
-        "eye_off",
-        "inbox_in",
-        "mail",
-        "newspaper",
-        "pencil_alt",
-        "phone_incoming",
-        "phone_missed_call",
-        "phone_outgoing",
-        "qrcode",
-        "rss",
-        "save_as",
-        "scissors",
-        "search_circle",
-        "truck",
-        "zoom_in",
-        "zoom_out"
+        'archive',
+        'briefcase',
+        'chat_alt2',
+        'chevron_double_right',
+        'chip',
+        'clipboard',
+        'clipboard_check',
+        'clipboard_copy',
+        'clipboard_list',
+        'credit_card',
+        'currency_dollar',
+        'document_duplicate',
+        'document_search',
+        'duplicate',
+        'external_link',
+        'eye',
+        'eye_off',
+        'inbox_in',
+        'mail',
+        'newspaper',
+        'pencil_alt',
+        'phone_incoming',
+        'phone_missed_call',
+        'phone_outgoing',
+        'qrcode',
+        'rss',
+        'save_as',
+        'scissors',
+        'search_circle',
+        'truck',
+        'zoom_in',
+        'zoom_out'
       ],
       filledIconsWithTriplePaths: [
-        "database",
-        "finger_print"
+        'database',
+        'finger_print'
       ]
     };
   },
