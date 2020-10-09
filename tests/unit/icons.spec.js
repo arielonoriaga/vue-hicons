@@ -15,7 +15,15 @@ describe('VueHicons', () => {
   beforeEach(() => {
     wrapper.setProps({
       name: 'x',
-      filled: false
+      filled: false,
+      strokeWidth: 2,
+      clipRule: 'nonzero',
+      fillRulePath2: '',
+      clipRulePath2: '',
+      fillColor: 'none',
+      fillRule: 'nonzero',
+      strokeColor: 'currentColor',
+      viewBox: '0 0 24 24'
     });
   });
 
@@ -49,13 +57,174 @@ describe('VueHicons', () => {
       expect(iconsComponent.computed.classIconFinal.call(wrapper.vm))
         .toBe('arrow-left bg-red-200 w-6 h-6');
     });
+
+    it("strokeStyleComponent not default value stroke", () => {
+      wrapper.setProps({
+        filled: true,
+        strokeWidth: 1
+      });
+
+      expect(
+        iconsComponent.computed.strokeStyleComponent.call(wrapper.vm)
+      ).toBe(1);
+    });
+
+    it("strokeStyleComponent default value stroke", () => {
+      wrapper.setProps({
+        filled: true
+      });
+
+      expect(
+        iconsComponent.computed.strokeStyleComponent.call(wrapper.vm)
+      ).toBe(0);
+    });
+
+    it("strokeStyleComponent default value stroke icon not filled", () => {
+      expect(
+        iconsComponent.computed.strokeStyleComponent.call(wrapper.vm)
+      ).toBe(2);
+    });
+
+    it("fillStyleComponent default value filled", () => {
+      wrapper.setProps({
+        filled: true,
+      });
+
+      expect(
+        iconsComponent.computed.fillStyleComponent.call(wrapper.vm)
+      ).toBe('currentColor');
+    });
+
+    it("fillStyleComponent not default value filled", () => {
+      wrapper.setProps({
+        filled: true,
+        fillColor: 'red'
+      });
+
+      expect(
+        iconsComponent.computed.fillStyleComponent.call(wrapper.vm)
+      ).toBe('red');
+    });
+
+    it("fillStyleComponent not default value", () => {
+      expect(
+        iconsComponent.computed.fillStyleComponent.call(wrapper.vm)
+      ).toBe('none');
+    });
+
+    it("viewBoxComponent default value filled", () => {
+      wrapper.setProps({
+        filled: true
+      });
+
+      expect(
+        iconsComponent.computed.viewBoxComponent.call(wrapper.vm)
+      ).toBe('0 0 20 20');
+    });
+
+    it("viewBoxComponent not default value filled", () => {
+      wrapper.setProps({
+        filled: true,
+        viewBox: '0 0 23 23'
+      });
+
+      expect(
+        iconsComponent.computed.viewBoxComponent.call(wrapper.vm)
+      ).toBe('0 0 23 23');
+    });
+
+    it("viewBoxComponent not default value", () => {
+      wrapper.setProps({
+        filled: false,
+        viewBox: '0 0 23 23'
+      });
+
+      expect(
+        iconsComponent.computed.viewBoxComponent.call(wrapper.vm)
+      ).toBe('0 0 23 23');
+    });
+
+    it("fillRuleBasicPath default value filled", () => {
+      wrapper.setProps({
+        filled: true,
+      });
+
+      expect(
+        iconsComponent.computed.fillRuleBasicPath.call(wrapper.vm)
+      ).toBe('evenodd');
+    });
+
+    it("fillRuleBasicPath not default value filled", () => {
+      wrapper.setProps({
+        filled: true,
+        fillRule: 'nonzeros'
+      });
+
+      expect(
+        iconsComponent.computed.fillRuleBasicPath.call(wrapper.vm)
+      ).toBe('nonzeros');
+    });
+
+    it("fillRuleBasicPath default value no filled", () => {
+      expect(
+        iconsComponent.computed.fillRuleBasicPath.call(wrapper.vm)
+      ).toBe('nonzero');
+    });
+
+    it("clipRuleBasicPath default value filled", () => {
+      wrapper.setProps({
+        filled: true
+      });
+
+      expect(
+        iconsComponent.computed.clipRuleBasicPath.call(wrapper.vm)
+      ).toBe('evenodd');
+    });
+
+    it("clipRuleBasicPath not default value filled", () => {
+      wrapper.setProps({
+        filled: true,
+        clipRule: 'nonzeros'
+      });
+
+      expect(
+        iconsComponent.computed.clipRuleBasicPath.call(wrapper.vm)
+      ).toBe('nonzeros');
+    });
+
+    it("clipRuleBasicPath not default value not filled", () => {
+      expect(
+        iconsComponent.computed.clipRuleBasicPath.call(wrapper.vm)
+      ).toBe('nonzero');
+    });
+
+    it("fillRuleTwoPath default value filled", () => {
+      wrapper.setProps({
+        filled: true
+      });
+
+      expect(
+        iconsComponent.computed.fillRuleTwoPath.call(wrapper.vm)
+      ).toBe('');
+    });
+
+    it("fillRuleTwoPath default value filled", () => {
+      wrapper.setProps({
+        filled: true,
+        name: 'eye',
+        fillRulePath2: 'juan'
+      });
+
+      expect(
+        iconsComponent.computed.fillRuleTwoPath.call(wrapper.vm)
+      ).toBe('juan');
+    });
   });
 
   describe("methods outline", () => {
     it("buildIcon simple path", () => {
       wrapper.setProps({
-        name: 'adjustments',
-        filled: false
+        name: 'adjustments'
       });
 
       wrapper.vm.buildIcon();
@@ -69,7 +238,6 @@ describe('VueHicons', () => {
 
     it("buildIcon double path", () => {
       wrapper.setProps({
-        filled: false,
         name: "volume_off"
       });
 
@@ -88,7 +256,6 @@ describe('VueHicons', () => {
     it("double path", () => {
       wrapper.setProps({
         name: "cog",
-        filled: false,
       });
 
       wrapper.vm.buildIcon();

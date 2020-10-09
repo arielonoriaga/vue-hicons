@@ -1,8 +1,8 @@
 <template>
   <svg
-    :stroke-width="(!filled || strokeWidth !== 2) ? strokeWidth : 0"
-    :fill="(!filled || fillColor !== 'none') ? fillColor : 'currentColor'"
-    :viewBox="(!filled || viewBox !== '0 0 24 24') ? viewBox : '0 0 20 20'"
+    :stroke-width="strokeStyleComponent"
+    :fill="fillStyleComponent"
+    :viewBox="viewBoxComponent"
     :class="classIconFinal"
     :stroke="strokeColor"
     :stroke-linecap="strokeLinecap"
@@ -11,15 +11,15 @@
 
     <path
       :d="icon.path1"
-      :fill-rule="(!filled || fillRule !== 'nonzero') ? fillRule : 'evenodd'"
-      :clip-rule="(!filled || clipRuleData !== 'nonzero') ? clipRuleData : 'nonzero'"
+      :fill-rule="fillRuleBasicPath"
+      :clip-rule="clipRuleBasicPath"
     />
 
     <path
       v-if="doublePath || isTriplePath"
       :d="icon.path2"
-      :fill-rule="((!filled && filledIconsWithDoublePath.includes(name)) ||  fillRulePath2 !== '') ? fillRulePath2 : 'evenodd'"
-      :clip-rule="((!filled && filledIconsWithDoublePath.includes(name)) ||  clipRulePath2 !== '') ? clipRulePath2 : 'evenodd'"
+      :fill-rule="fillRuleTwoPath"
+      :clip-rule="clipRuleTwoPath"
     />
 
     <path
@@ -193,6 +193,91 @@ export default {
 
     stringIconsJSON() {
       return JSON.stringify(this.icons);
+    },
+
+    strokeStyleComponent() {
+      if(this.filled) {
+        return (this.strokeWidth !== 2)
+          ? this.strokeWidth
+          : 0;
+
+      } else {
+        return this.strokeWidth;
+      }
+    },
+
+    fillStyleComponent() {
+      if(this.filled) {
+        return this.fillColor !== 'none'
+          ? this.fillColor
+          : 'currentColor';
+
+      } else {
+        return this.fillColor;
+      }
+    },
+
+    viewBoxComponent() {
+      if(this.filled) {
+        return this.viewBox !== '0 0 24 24'
+          ? this.viewBox
+          : '0 0 20 20';
+
+      } else {
+        return this.viewBox;
+      }
+    },
+
+    fillRuleBasicPath() {
+      if(this.filled) {
+        return this.fillRule !== 'nonzero'
+          ? this.fillRule
+          : 'evenodd';
+
+      } else {
+        return this.fillRule;
+      }
+    },
+
+    clipRuleBasicPath() {
+      if(this.filled) {
+        return this.clipRuleData !== 'nonzero'
+          ? this.clipRuleData
+          : 'evenodd';
+
+      } else {
+        return this.clipRuleData;
+      }
+    },
+
+    fillRuleTwoPath() {
+      if(this.filled) {
+        if(this.fillRulePath2 === '') {
+          return this.filledIconsWithDoublePath.includes(this.name)
+            ? 'evenodd'
+            : '';
+
+        } else {
+          return this.fillRulePath2;
+        }
+      } else {
+        return this.fillRulePath2;
+      }
+    },
+
+    clipRuleTwoPath() {
+      if(this.filled) {
+        if(this.clipRulePath2 === '') {
+          return this.filledIconsWithDoublePath.includes(this.name)
+            ? 'evenodd'
+            : '';
+
+        } else {
+          return this.clipRulePath2;
+        }
+      } else {
+        return this.clipRulePath2;
+      }
     }
   },
 
