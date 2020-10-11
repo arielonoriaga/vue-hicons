@@ -59,7 +59,6 @@ export default {
 
     isFilled: {
       type: Boolean,
-      propName: 'filled',
       default: false
     },
 
