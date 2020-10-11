@@ -56,9 +56,7 @@ Example:
   <VueHicons name="arrow_left">
 ```
 
-Another point to keep in mind is that if you use the filled icons, surely in its second label fill-rule and clip-rule you should put the value evenodd, this you can see when you copy a heroicons icon and paste it somewhere, for example, in the google devtools console
-
-(Soon these cases will be detected only and it will not be necessary to add more tags to our component)
+### How to use filled icons?
 
 Example:
 
@@ -66,11 +64,6 @@ Example:
 <VueHicons
   name="archive",
   :filled="true"
-  view-box="0 0 20 20"
-  stroke-color="none",
-  fill-color="currentColor"
-  clip-rule-path2="evenodd"
-  fill-rule-path2="evenodd"
 >
 ```
 
