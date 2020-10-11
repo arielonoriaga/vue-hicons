@@ -8,14 +8,14 @@ describe('VueHicons', () => {
   const wrapper = shallowMount(iconsComponent, {
     propsData: {
       name: 'x',
-      filled: false
+      isFilled: false
     }
   });
 
   beforeEach(() => {
     wrapper.setProps({
       name: 'x',
-      filled: false,
+      isFilled: false,
       strokeWidth: 2,
       clipRule: 'nonzero',
       fillRulePath2: '',
@@ -46,7 +46,7 @@ describe('VueHicons', () => {
     it("classIconFinal with other width and class", async () => {
       wrapper.setProps({
         name: "arrow_left",
-        filled: false,
+        isFilled: false,
         classIcon: "bg-red-200",
         widthIcon: "6",
         heightIcon: "6"
@@ -60,7 +60,7 @@ describe('VueHicons', () => {
 
     it("strokeStyleComponent not default value stroke", () => {
       wrapper.setProps({
-        filled: true,
+        isFilled: true,
         strokeWidth: 1
       });
 
@@ -71,7 +71,7 @@ describe('VueHicons', () => {
 
     it("strokeStyleComponent default value stroke", () => {
       wrapper.setProps({
-        filled: true
+        isFilled: true
       });
 
       expect(
@@ -87,7 +87,7 @@ describe('VueHicons', () => {
 
     it("fillStyleComponent default value filled", () => {
       wrapper.setProps({
-        filled: true,
+        isFilled: true,
       });
 
       expect(
@@ -97,7 +97,7 @@ describe('VueHicons', () => {
 
     it("fillStyleComponent not default value filled", () => {
       wrapper.setProps({
-        filled: true,
+        isFilled: true,
         fillColor: 'red'
       });
 
@@ -114,7 +114,7 @@ describe('VueHicons', () => {
 
     it("viewBoxComponent default value filled", () => {
       wrapper.setProps({
-        filled: true
+        isFilled: true
       });
 
       expect(
@@ -124,7 +124,7 @@ describe('VueHicons', () => {
 
     it("viewBoxComponent not default value filled", () => {
       wrapper.setProps({
-        filled: true,
+        isFilled: true,
         viewBox: '0 0 23 23'
       });
 
@@ -135,7 +135,7 @@ describe('VueHicons', () => {
 
     it("viewBoxComponent not default value", () => {
       wrapper.setProps({
-        filled: false,
+        isFilled: false,
         viewBox: '0 0 23 23'
       });
 
@@ -146,7 +146,7 @@ describe('VueHicons', () => {
 
     it("fillRuleBasicPath default value filled", () => {
       wrapper.setProps({
-        filled: true,
+        isFilled: true,
       });
 
       expect(
@@ -156,7 +156,7 @@ describe('VueHicons', () => {
 
     it("fillRuleBasicPath not default value filled", () => {
       wrapper.setProps({
-        filled: true,
+        isFilled: true,
         fillRule: 'nonzeros'
       });
 
@@ -173,7 +173,7 @@ describe('VueHicons', () => {
 
     it("clipRuleBasicPath default value filled", () => {
       wrapper.setProps({
-        filled: true
+        isFilled: true
       });
 
       expect(
@@ -183,7 +183,7 @@ describe('VueHicons', () => {
 
     it("clipRuleBasicPath not default value filled", () => {
       wrapper.setProps({
-        filled: true,
+        isFilled: true,
         clipRule: 'nonzeros'
       });
 
@@ -200,7 +200,7 @@ describe('VueHicons', () => {
 
     it("fillRuleTwoPath default value filled", () => {
       wrapper.setProps({
-        filled: true
+        isFilled: true
       });
 
       expect(
@@ -210,7 +210,7 @@ describe('VueHicons', () => {
 
     it("fillRuleTwoPath default value filled", () => {
       wrapper.setProps({
-        filled: true,
+        isFilled: true,
         name: 'eye',
         fillRulePath2: 'juan'
       });
@@ -274,7 +274,7 @@ describe('VueHicons', () => {
   describe("methods filled", () => {
     beforeEach(() => {
       wrapper.setProps({
-        filled:true
+        isFilled:true
       });
 
       iconsComponent.computed.stringIconsJSON.call(wrapper.vm);

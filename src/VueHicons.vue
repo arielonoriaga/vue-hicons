@@ -57,8 +57,9 @@ export default {
       required: true
     },
 
-    filled: {
+    isFilled: {
       type: Boolean,
+      propName: 'filled',
       default: false
     },
 
@@ -196,7 +197,7 @@ export default {
     },
 
     strokeStyleComponent() {
-      if(this.filled) {
+      if(this.isFilled) {
         return (this.strokeWidth !== 2)
           ? this.strokeWidth
           : 0;
@@ -207,7 +208,7 @@ export default {
     },
 
     fillStyleComponent() {
-      if(this.filled) {
+      if(this.isFilled) {
         return this.fillColor !== 'none'
           ? this.fillColor
           : 'currentColor';
@@ -218,7 +219,7 @@ export default {
     },
 
     viewBoxComponent() {
-      if(this.filled) {
+      if(this.isFilled) {
         return this.viewBox !== '0 0 24 24'
           ? this.viewBox
           : '0 0 20 20';
@@ -229,7 +230,7 @@ export default {
     },
 
     fillRuleBasicPath() {
-      if(this.filled) {
+      if(this.isFilled) {
         return this.fillRule !== 'nonzero'
           ? this.fillRule
           : 'evenodd';
@@ -240,7 +241,7 @@ export default {
     },
 
     clipRuleBasicPath() {
-      if(this.filled) {
+      if(this.isFilled) {
         return this.clipRuleData !== 'nonzero'
           ? this.clipRuleData
           : 'evenodd';
@@ -251,7 +252,7 @@ export default {
     },
 
     fillRuleTwoPath() {
-      if(this.filled) {
+      if(this.isFilled) {
         if(this.fillRulePath2 === '') {
           return this.filledIconsWithDoublePath.includes(this.name)
             ? 'evenodd'
@@ -266,7 +267,7 @@ export default {
     },
 
     clipRuleTwoPath() {
-      if(this.filled) {
+      if(this.isFilled) {
         if(this.clipRulePath2 === '') {
           return this.filledIconsWithDoublePath.includes(this.name)
             ? 'evenodd'
@@ -287,19 +288,19 @@ export default {
 
   methods: {
     buildIcon() {
-      if (!this.iconsWithDoublePath.includes(`${this.name}`) && !this.filled && !this.filledIconsWithTriplePaths.includes(`${this.name}`)) {
+      if (!this.iconsWithDoublePath.includes(`${this.name}`) && !this.isFilled && !this.filledIconsWithTriplePaths.includes(`${this.name}`)) {
         this.icon.path1 = this.icosSinDoblePath();
 
-      } else if (this.iconsWithDoublePath.includes(`${this.name}`) && !this.filled && !this.filledIconsWithTriplePaths.includes(`${this.name}`)) {
+      } else if (this.iconsWithDoublePath.includes(`${this.name}`) && !this.isFilled && !this.filledIconsWithTriplePaths.includes(`${this.name}`)) {
         this.buildIconDoublePath();
 
-      } else if (!this.filledIconsWithDoublePath.includes(`${this.name}`) && this.filled && !this.filledIconsWithTriplePaths.includes(`${this.name}`)) {
+      } else if (!this.filledIconsWithDoublePath.includes(`${this.name}`) && this.isFilled && !this.filledIconsWithTriplePaths.includes(`${this.name}`)) {
         this.icon.path1 = this.icosSinDoblePathFilled();
 
-      } else if (this.filledIconsWithDoublePath.includes(`${this.name}`)  && this.filled && !this.filledIconsWithTriplePaths.includes(`${this.name}`)) {
+      } else if (this.filledIconsWithDoublePath.includes(`${this.name}`)  && this.isFilled && !this.filledIconsWithTriplePaths.includes(`${this.name}`)) {
         this.buildIconDoublePathFilled();
 
-      } else if (!this.filledIconsWithDoublePath.includes(`${this.name}`) && this.filled && this.filledIconsWithTriplePaths.includes(`${this.name}`)) {
+      } else if (!this.filledIconsWithDoublePath.includes(`${this.name}`) && this.isFilled && this.filledIconsWithTriplePaths.includes(`${this.name}`)) {
         this.buildIconTriplePathFilled();
       }
     },

@@ -30,7 +30,7 @@ export default {
 | class-icon | String | - | false |
 | clip-rule | String | nonzero | false |
 | clip-rule-path2 | String | - | false |
-| filled | Boolean | false | false |
+| is-filled | Boolean | false | false |
 | fill-color | String | none | false |
 | fill-rule | String | nonzero | false |
 | fill-rule-path2 | String | - | false |
@@ -63,7 +63,7 @@ Example:
 ```
 <VueHicons
   name="archive",
-  :filled="true"
+  is-filled
 >
 ```
 
