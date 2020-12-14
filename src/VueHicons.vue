@@ -30,7 +30,6 @@
 </template>
 
 <script>
-import './assets/css/tailwind.css';
 import icons from './assets/icons.json';
 
 export default {
