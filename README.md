@@ -36,7 +36,7 @@ But, with Vue-Hicons you just have to write something like this:
 ```vue
 <VueHicons
   name="academic_cap"
-  filled
+  is-filled
 />
 ```
 
