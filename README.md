@@ -14,7 +14,7 @@ Okey, the answer to this question is very simple:
 * It's easy to use and read
 * More sintactic
 
-### Thats solves me?
+### Is thats solves me?
 
 Okey, if you use Heroicons you should write something like this:
 
@@ -81,7 +81,7 @@ export default {
 
 ### Caution
 
-If the name of the icon contains a - \(hyphen\) it must be called with _ \(underscore\)
+If icon's name contains a - \(hyphen\) it must be called with _ \(underscore\)
 
 Example:
 
