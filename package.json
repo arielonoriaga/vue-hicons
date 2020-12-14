@@ -1,6 +1,6 @@
 {
   "name": "vue-hicons",
-  "version": "1.2.5",
+  "version": "1.2.6",
   "description": "## Project setup ``` npm i -s vue-hicons@latest ```",
   "author": "Ariel Onoriaga",
   "repository": {
@@ -8,7 +8,7 @@
     "url": "https://github.com/ArielOnoriaga/vue-hicons"
   },
   "bugs": {
-      "url": "https://github.com/ArielOnoriaga/vue-hicons/issues"
+    "url": "https://github.com/ArielOnoriaga/vue-hicons/issues"
   },
   "scripts": {
     "serve": "vue-cli-service serve",
@@ -19,9 +19,6 @@
   },
   "main": "src/main.js",
   "dependencies": {
-    "@vue/cli": "^4.5.6",
-    "core-js": "^3.6.5",
-    "tailwindcss": "^1.1.2",
     "vue": "^2.6.11"
   },
   "devDependencies": {
