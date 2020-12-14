@@ -9,12 +9,11 @@ npm i -s vue-hicons@latest
 
 Okey, the answer to this question is very simple:
 
-* DNR: Don't repeat yourself
 * Write less, do more
 * It's easy to use and read
 * More sintactic
 
-### Is thats solves me?
+### What does this package solve for me?
 
 Okey, if you use Heroicons you should write something like this:
 
