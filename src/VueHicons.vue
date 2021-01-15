@@ -263,24 +263,30 @@ export default {
     buildIcon() {
       const iconName = this.name;
 
-      if(!this.isFilled) {
-        if (this.iconsWithDoublePath.includes(iconName))
-          this.buildIconDoublePath();
-        else
-          this.icon.path1 = this.icosSinDoblePath();
+      if(!this.isFilled)
+        this.buildNoFilledIcon(iconName);
+      else
+        this.buildFileldIcon(iconName);
+    },
 
-      } else {
-        if(this.filledIconsWithTriplePaths.includes(iconName)) {
-          this.buildIconTriplePathFilled();
+    buildNoFilledIcon(name) {
+      if (this.iconsWithDoublePath.includes(name))
+        this.buildIconDoublePath();
+      else
+        this.icon.path1 = this.icosSinDoblePath();
+    },
 
-          return;
-        }
+    buildFileldIcon(name) {
+      if(this.filledIconsWithTriplePaths.includes(name)) {
+        this.buildIconTriplePathFilled();
 
-        if (this.filledIconsWithDoublePath.includes(iconName))
-          this.buildIconDoublePathFilled();
-        else
-          this.icon.path1 = this.icosSinDoblePathFilled();
+        return;
       }
+
+      if (this.filledIconsWithDoublePath.includes(name))
+        this.buildIconDoublePathFilled();
+      else
+        this.icon.path1 = this.icosSinDoblePathFilled();
     },
 
     icosSinDoblePath() {
@@ -300,7 +306,7 @@ export default {
       let paths = this.stringIconsJSON
         .split(`"${this.name}":{`)[1]
         .split(`},"`)[0].split(`path1":"`)[1]
-        .split(`","path2":"`);
+        .split('","path2":"');
 
       return {
         path1: paths[0],
@@ -310,7 +316,7 @@ export default {
 
     icosWithDoublePathFilled() {
       let paths = this.stringIconsJSON
-        .split(`"filled":{`)[1]
+        .split('"filled":{')[1]
         .split(`"${this.name}":{`)[1]
         .split('},"')[0]
         .split('path1":"')[1]
@@ -342,14 +348,14 @@ export default {
 
     icosWithTriplePathFilled() {
       let paths = this.stringIconsJSON
-        .split(`"filled":{`)[1]
+        .split('"filled":{')[1]
         .split(`"${this.name}":{`)[1]
         .split('},"')[0]
         .split('path1":"')[1]
-        .split(`","path2":"`);
+        .split('","path2":"');
 
       const path1 = paths[0];
-      const path2 = paths[1].split(`"`)[0];
+      const path2 = paths[1].split('"')[0];
       const path3 = paths[1].split('","path3":"')[1].split('"')[0];
 
       return { path1, path2, path3 };
