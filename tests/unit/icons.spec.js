@@ -297,7 +297,7 @@ describe('VueHicons', () => {
     it("build icon double path filled", () => {
       wrapper.setProps({
         name: "currency_dollar",
-        filled: true
+        isFilled: true
       });
 
       wrapper.vm.buildIcon();
@@ -317,7 +317,7 @@ describe('VueHicons', () => {
     it("icon database", () => {
       wrapper.setProps({
         name: "database",
-        filled: true
+        isFilled: true
       });
 
       wrapper.vm.buildIcon();

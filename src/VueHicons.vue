@@ -7,6 +7,7 @@
     :stroke="strokeColor"
     :stroke-linecap="strokeLinecap"
     :stroke-linejoin="strokeLinejoin"
+    @click="$emit('click')"
   >
 
     <path
@@ -113,68 +114,66 @@ export default {
     }
   },
 
-  data() {
-    return {
-      doublePath: false,
-      isTriplePath: false,
-      icon: {
-        'path1': '',
-        'path2': ''
-      },
-      icons: icons,
-      iconsWithDoublePath: [
-        'chart_pie',
-        'chevron_double_right',
-        'chip',
-        'cog',
-        'eye',
-        'fire',
-        'location_marker',
-        'play',
-        'stop',
-        'truck',
-        'volume_off'
-      ],
-      filledIconsWithDoublePath: [
-        'archive',
-        'briefcase',
-        'chat_alt2',
-        'chevron_double_right',
-        'chip',
-        'clipboard',
-        'clipboard_check',
-        'clipboard_copy',
-        'clipboard_list',
-        'credit_card',
-        'currency_dollar',
-        'document_duplicate',
-        'document_search',
-        'duplicate',
-        'external_link',
-        'eye',
-        'eye_off',
-        'inbox_in',
-        'mail',
-        'newspaper',
-        'pencil_alt',
-        'phone_incoming',
-        'phone_missed_call',
-        'phone_outgoing',
-        'qrcode',
-        'rss',
-        'save_as',
-        'scissors',
-        'search_circle',
-        'truck',
-        'zoom_in',
-        'zoom_out'
-      ],
-      filledIconsWithTriplePaths: [
-        'database',
-        'finger_print'
-      ]
-    };
-  },
+  data:() => ({
+    doublePath: false,
+    isTriplePath: false,
+    icon: {
+      'path1': '',
+      'path2': ''
+    },
+    icons: icons,
+    iconsWithDoublePath: [
+      'chart_pie',
+      'chevron_double_right',
+      'chip',
+      'cog',
+      'eye',
+      'fire',
+      'location_marker',
+      'play',
+      'stop',
+      'truck',
+      'volume_off'
+    ],
+    filledIconsWithDoublePath: [
+      'archive',
+      'briefcase',
+      'chat_alt2',
+      'chevron_double_right',
+      'chip',
+      'clipboard',
+      'clipboard_check',
+      'clipboard_copy',
+      'clipboard_list',
+      'credit_card',
+      'currency_dollar',
+      'document_duplicate',
+      'document_search',
+      'duplicate',
+      'external_link',
+      'eye',
+      'eye_off',
+      'inbox_in',
+      'mail',
+      'newspaper',
+      'pencil_alt',
+      'phone_incoming',
+      'phone_missed_call',
+      'phone_outgoing',
+      'qrcode',
+      'rss',
+      'save_as',
+      'scissors',
+      'search_circle',
+      'truck',
+      'zoom_in',
+      'zoom_out'
+    ],
+    filledIconsWithTriplePaths: [
+      'database',
+      'finger_print'
+    ]
+  }),
 
   computed: {
     iconNameClass() {
@@ -182,7 +181,7 @@ export default {
     },
 
     classIconFinal () {
-      return (this.heightIcon == 4)
+      return this.heightIcon == 4
         ? `${this.iconNameClass} ${this.classIcon} w-${this.widthIcon}`
         : `${this.iconNameClass} ${this.classIcon} w-${this.widthIcon} h-${this.heightIcon}`;
     },
@@ -196,88 +195,63 @@ export default {
     },
 
     strokeStyleComponent() {
-      if(this.isFilled) {
-        return (this.strokeWidth !== 2)
+      return !this.isFilled
+        ? this.strokeWidth
+        : this.strokeWidth !== 2
           ? this.strokeWidth
           : 0;
-
-      } else {
-        return this.strokeWidth;
-      }
     },
 
     fillStyleComponent() {
-      if(this.isFilled) {
-        return this.fillColor !== 'none'
+      return !this.isFilled
+        ? this.fillColor
+        : this.fillColor !== 'none'
           ? this.fillColor
           : 'currentColor';
-
-      } else {
-        return this.fillColor;
-      }
     },
 
     viewBoxComponent() {
-      if(this.isFilled) {
-        return this.viewBox !== '0 0 24 24'
+      return !this.isFilled
+        ? this.viewBox
+        : this.viewBox !== '0 0 24 24'
           ? this.viewBox
           : '0 0 20 20';
-
-      } else {
-        return this.viewBox;
-      }
     },
 
     fillRuleBasicPath() {
-      if(this.isFilled) {
-        return this.fillRule !== 'nonzero'
+      return !this.isFilled
+        ? this.fillRule
+        : this.fillRule !== 'nonzero'
           ? this.fillRule
           : 'evenodd';
-
-      } else {
-        return this.fillRule;
-      }
     },
 
     clipRuleBasicPath() {
-      if(this.isFilled) {
-        return this.clipRuleData !== 'nonzero'
+      return !this.isFilled
+        ? this.clipRuleData
+        : this.clipRuleData !== 'nonzero'
           ? this.clipRuleData
           : 'evenodd';
-
-      } else {
-        return this.clipRuleData;
-      }
     },
 
     fillRuleTwoPath() {
-      if(this.isFilled) {
-        if(this.fillRulePath2 === '') {
-          return this.filledIconsWithDoublePath.includes(this.name)
+      return !this.isFilled
+        ? this.fillRulePath2
+        : this.fillRulePath2 !== ''
+          ? this.fillRulePath2
+          : this.filledIconsWithDoublePath.includes(this.name)
             ? 'evenodd'
             : '';
-
-        } else {
-          return this.fillRulePath2;
-        }
-      } else {
-        return this.fillRulePath2;
-      }
     },
 
     clipRuleTwoPath() {
-      if(this.isFilled) {
-        if(this.clipRulePath2 === '') {
-          return this.filledIconsWithDoublePath.includes(this.name)
+      return !this.isFilled
+        ? this.clipRulePath2
+        : this.clipRulePath2 !== ''
+          ? this.clipRulePath2
+          : this.filledIconsWithDoublePath.includes(this.name)
             ? 'evenodd'
             : '';
-
-        } else {
-          return this.clipRulePath2;
-        }
-      } else {
-        return this.clipRulePath2;
-      }
     }
   },
 
@@ -287,20 +261,25 @@ export default {
 
   methods: {
     buildIcon() {
-      if (!this.iconsWithDoublePath.includes(`${this.name}`) && !this.isFilled && !this.filledIconsWithTriplePaths.includes(`${this.name}`)) {
-        this.icon.path1 = this.icosSinDoblePath();
+      const iconName = this.name;
 
-      } else if (this.iconsWithDoublePath.includes(`${this.name}`) && !this.isFilled && !this.filledIconsWithTriplePaths.includes(`${this.name}`)) {
-        this.buildIconDoublePath();
+      if(!this.isFilled) {
+        if (this.iconsWithDoublePath.includes(iconName))
+          this.buildIconDoublePath();
+        else
+          this.icon.path1 = this.icosSinDoblePath();
 
-      } else if (!this.filledIconsWithDoublePath.includes(`${this.name}`) && this.isFilled && !this.filledIconsWithTriplePaths.includes(`${this.name}`)) {
-        this.icon.path1 = this.icosSinDoblePathFilled();
+      } else {
+        if(this.filledIconsWithTriplePaths.includes(iconName)) {
+          this.buildIconTriplePathFilled();
 
-      } else if (this.filledIconsWithDoublePath.includes(`${this.name}`)  && this.isFilled && !this.filledIconsWithTriplePaths.includes(`${this.name}`)) {
-        this.buildIconDoublePathFilled();
+          return;
+        }
 
-      } else if (!this.filledIconsWithDoublePath.includes(`${this.name}`) && this.isFilled && this.filledIconsWithTriplePaths.includes(`${this.name}`)) {
-        this.buildIconTriplePathFilled();
+        if (this.filledIconsWithDoublePath.includes(iconName))
+          this.buildIconDoublePathFilled();
+        else
+          this.icon.path1 = this.icosSinDoblePathFilled();
       }
     },
 
@@ -324,8 +303,8 @@ export default {
         .split(`","path2":"`);
 
       return {
-        "path1": paths[0],
-        "path2": paths[1].split(`"`)[0]
+        path1: paths[0],
+        path2: paths[1].split(`"`)[0]
       };
     },
 
@@ -338,8 +317,8 @@ export default {
         .split(`","path2":"`);
 
       return {
-        "path1": paths[0],
-        "path2": paths[1].split(`"`)[0]
+        path1: paths[0],
+        path2: paths[1].split(`"`)[0]
       };
     },
 
@@ -369,11 +348,11 @@ export default {
         .split('path1":"')[1]
         .split(`","path2":"`);
 
-      return {
-        "path1": paths[0],
-        "path2": paths[1].split(`"`)[0],
-        "path3": paths[1].split('","path3":"')[1].split('"')[0]
-      };
+      const path1 = paths[0];
+      const path2 = paths[1].split(`"`)[0];
+      const path3 = paths[1].split('","path3":"')[1].split('"')[0];
+
+      return { path1, path2, path3 };
     },
 
     buildIconTriplePathFilled() {

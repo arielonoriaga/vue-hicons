@@ -6,19 +6,18 @@ function install(Vue) {
   Vue.component("VueHicons", VueHicons);
 }
 
-const plugin = {
-  install
-};
+const plugin = { install };
 
 let GlobalVue = null;
-if (typeof window !== "undefined") {
-  GlobalVue = window.Vue;
-} else if (typeof global !== "undefined") {
-  GlobalVue = global.vue;
-}
-if (GlobalVue) {
+
+globalVue = typeof window !== "undefined"
+  ? window.Vue
+  : typeof global !== "undefined"
+    ? global.vue
+    : null;
+
+if (GlobalVue)
   GlobalVue.use(plugin);
-}
 
 VueHicons.install = install;
 
