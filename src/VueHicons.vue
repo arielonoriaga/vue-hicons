@@ -40,7 +40,7 @@ export default {
   props: {
     clipRule: {
       type: String,
-      default: 'nonzero'
+      default: ''
     },
 
     fillRulePath2: {
@@ -195,63 +195,45 @@ export default {
     },
 
     strokeStyleComponent() {
-      return !this.isFilled
-        ? this.strokeWidth
-        : this.strokeWidth !== 2
-          ? this.strokeWidth
-          : 0;
+      return this.isFilled && this.strokeWidth === 2
+        ? 0
+        : this.strokeWidth;
     },
 
     fillStyleComponent() {
-      return !this.isFilled
-        ? this.fillColor
-        : this.fillColor !== 'none'
-          ? this.fillColor
-          : 'currentColor';
+      return this.isFilled && this.fillColor === 'none'
+        ? 'currentColor'
+        : this.fillColor;
     },
 
     viewBoxComponent() {
-      return !this.isFilled
-        ? this.viewBox
-        : this.viewBox !== '0 0 24 24'
-          ? this.viewBox
-          : '0 0 20 20';
+      return this.isFilled && this.viewBox === '0 0 24 24'
+        ? '0 0 20 20'
+        : this.viewBox;
     },
 
     fillRuleBasicPath() {
-      return !this.isFilled
-        ? this.fillRule
-        : this.fillRule !== 'nonzero'
-          ? this.fillRule
-          : 'evenodd';
+      return this.isFilled && this.fillRule === 'nonzero'
+        ? 'evenodd'
+        : this.fillRule;
     },
 
     clipRuleBasicPath() {
-      return !this.isFilled
-        ? this.clipRuleData
-        : this.clipRuleData !== 'nonzero'
-          ? this.clipRuleData
-          : 'evenodd';
+      return this.isFilled && this.clipRuleData === 'nonzero'
+        ? 'evenodd'
+        : this.clipRuleData;
     },
 
     fillRuleTwoPath() {
-      return !this.isFilled
-        ? this.fillRulePath2
-        : this.fillRulePath2 !== ''
-          ? this.fillRulePath2
-          : this.filledIconsWithDoublePath.includes(this.name)
-            ? 'evenodd'
-            : '';
+      return this.isFilled && this.fillRulePath2 === '' && this.filledIconsWithDoublePath.includes(this.name)
+        ? 'evenodd'
+        : this.fillRulePath2;
     },
 
     clipRuleTwoPath() {
-      return !this.isFilled
+      return this.isFilled && this.clipRulePath2 === '' && this.filledIconsWithDoublePath.includes(this.name)
         ? this.clipRulePath2
-        : this.clipRulePath2 !== ''
-          ? this.clipRulePath2
-          : this.filledIconsWithDoublePath.includes(this.name)
-            ? 'evenodd'
-            : '';
+        : 'evenodd';
     }
   },
 
