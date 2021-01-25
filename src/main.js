@@ -10,7 +10,7 @@ const plugin = { install };
 
 let GlobalVue = null;
 
-globalVue = typeof window !== "undefined"
+GlobalVue = typeof window !== "undefined"
   ? window.Vue
   : typeof global !== "undefined"
     ? global.vue
