@@ -34,8 +34,12 @@
 import './assets/css/tailwind.css';
 import icons from './assets/icons.json';
 
+import DoublePathIcons from "./assets/DoublePathIcons";
+import FilledDoublePathIcons from "./assets/FilledDoublePathIcons";
+import TriplePathFilledIcons from "./assets/TriplePathFilledIcons";
+
 export default {
-  name: "VueHicons",
+  name: 'VueHicons',
 
   props: {
     clipRule: {
@@ -114,7 +118,7 @@ export default {
     }
   },
 
-  data:() => ({
+  data: () => ({
     doublePath: false,
     isTriplePath: false,
     icon: {
@@ -122,62 +126,14 @@ export default {
       'path2': ''
     },
     icons: icons,
-    iconsWithDoublePath: [
-      'chart_pie',
-      'chevron_double_right',
-      'chip',
-      'cog',
-      'eye',
-      'fire',
-      'location_marker',
-      'play',
-      'stop',
-      'truck',
-      'volume_off'
-    ],
-    filledIconsWithDoublePath: [
-      'archive',
-      'briefcase',
-      'chat_alt2',
-      'chevron_double_right',
-      'chip',
-      'clipboard',
-      'clipboard_check',
-      'clipboard_copy',
-      'clipboard_list',
-      'credit_card',
-      'currency_dollar',
-      'document_duplicate',
-      'document_search',
-      'duplicate',
-      'external_link',
-      'eye',
-      'eye_off',
-      'inbox_in',
-      'mail',
-      'newspaper',
-      'pencil_alt',
-      'phone_incoming',
-      'phone_missed_call',
-      'phone_outgoing',
-      'qrcode',
-      'rss',
-      'save_as',
-      'scissors',
-      'search_circle',
-      'truck',
-      'zoom_in',
-      'zoom_out'
-    ],
-    filledIconsWithTriplePaths: [
-      'database',
-      'finger_print'
-    ]
+    iconsWithDoublePath: DoublePathIcons,
+    filledIconsWithDoublePath: FilledDoublePathIcons,
+    filledIconsWithTriplePaths: TriplePathFilledIcons,
   }),
 
   computed: {
     iconNameClass() {
-      return this.name.split("_").join("-");
+      return this.name.split('_').join('-');
     },
 
     classIconFinal () {
@@ -187,11 +143,15 @@ export default {
     },
 
     clipRuleData() {
-      return this.name == "volume_off" ? "evenodd" : this.clipRule;
+      return this.name == 'volume_off' ? 'evenodd' : this.clipRule;
     },
 
     stringIconsJSON() {
-      return JSON.stringify(this.icons);
+      const jsonString = JSON.stringify(this.icons);
+
+      return this.isFilled
+        ? jsonString.split(`"filled":{`)[1]
+        : jsonString;
     },
 
     strokeStyleComponent() {
@@ -242,116 +202,78 @@ export default {
   },
 
   methods: {
+    normalize(text) {
+      return text.toLowerCase().replace('-', '_');
+    },
+
     buildIcon() {
-      const iconName = this.name;
+      const iconName = this.normalize(this.name);
 
-      if(!this.isFilled)
-        this.buildNoFilledIcon(iconName);
-      else
-        this.buildFileldIcon(iconName);
+      this.buildIconStructure(iconName);
     },
 
-    buildNoFilledIcon(name) {
-      if (this.iconsWithDoublePath.includes(name))
-        this.buildIconDoublePath();
-      else
-        this.icon.path1 = this.icosSinDoblePath();
-    },
-
-    buildFileldIcon(name) {
-      if(this.filledIconsWithTriplePaths.includes(name)) {
-        this.buildIconTriplePathFilled();
+    buildIconStructure(name) {
+      if(this.isFilled && this.filledIconsWithTriplePaths.includes(name)) {
+        this.generateTriplePathIcon();
 
         return;
       }
 
-      if (this.filledIconsWithDoublePath.includes(name))
-        this.buildIconDoublePathFilled();
-      else
-        this.icon.path1 = this.icosSinDoblePathFilled();
+      this.generateIcon(name);
     },
 
-    icosSinDoblePath() {
-      return this.stringIconsJSON
-        .split(`"${this.name}":"`)[1]
-        .split('"')[0];
+    generateIcon(name) {
+      const isDoublePath = this.isFilled
+        ? this.filledIconsWithDoublePath.includes(name)
+        : this.iconsWithDoublePath.includes(name);
+
+      isDoublePath
+        ? this.buildIconDoublePath()
+        : this.icon.path1 = this.getIconPath();
     },
 
-    icosSinDoblePathFilled() {
+    getIconPath() {
       return this.stringIconsJSON
-        .split(`"filled":{`)[1]
         .split(`"${this.name}":"`)[1]
         .split('","')[0];
-    },
-
-    icosWithDoublePath() {
-      let paths = this.stringIconsJSON
-        .split(`"${this.name}":{`)[1]
-        .split(`},"`)[0].split(`path1":"`)[1]
-        .split('","path2":"');
-
-      return {
-        path1: paths[0],
-        path2: paths[1].split(`"`)[0]
-      };
-    },
-
-    icosWithDoublePathFilled() {
-      let paths = this.stringIconsJSON
-        .split('"filled":{')[1]
-        .split(`"${this.name}":{`)[1]
-        .split('},"')[0]
-        .split('path1":"')[1]
-        .split(`","path2":"`);
-
-      return {
-        path1: paths[0],
-        path2: paths[1].split(`"`)[0]
-      };
     },
 
     buildIconDoublePath() {
       this.doublePath = true;
 
-      let temporalJSONWithDoblePath = this.icosWithDoublePath();
-
-      this.icon.path1 = temporalJSONWithDoblePath.path1;
-      this.icon.path2 = temporalJSONWithDoblePath.path2;
+      this.icon = this.getDoublePathIcon();
     },
 
-    buildIconDoublePathFilled() {
-      this.doublePath = true;
+    generateTriplePathIcon() {
+      this.isTriplePath = true;
 
-      let temporalJSONWithDoblePath = this.icosWithDoublePathFilled();
-
-      this.icon.path1 = temporalJSONWithDoblePath.path1;
-      this.icon.path2 = temporalJSONWithDoblePath.path2;
+      this.icon = this.icosWithTriplePathFilled();
     },
 
     icosWithTriplePathFilled() {
-      let paths = this.stringIconsJSON
-        .split('"filled":{')[1]
-        .split(`"${this.name}":{`)[1]
-        .split('},"')[0]
-        .split('path1":"')[1]
-        .split('","path2":"');
+      const {
+        paths,
+        path1,
+        path2,
+      } = this.getDoublePathIcon();
 
-      const path1 = paths[0];
-      const path2 = paths[1].split('"')[0];
-      const path3 = paths[1].split('","path3":"')[1].split('"')[0];
+      const [path3] = paths[1].split('","path3":"')[1].split('"');
 
       return { path1, path2, path3 };
     },
 
-    buildIconTriplePathFilled() {
-      this.isTriplePath = true;
+    getDoublePathIcon() {
+      const paths = this.stringIconsJSON
+        .split(`"${this.name}":{`)[1]
+        .split(`},"`)[0]
+        .split(`path1":"`)[1]
+        .split('","path2":"');
 
-      let temporalJSONWithDoblePath = this.icosWithTriplePathFilled();
+      const [path1] = paths;
+      const [path2] = paths[1].split(`"`);
 
-      this.icon.path1 = temporalJSONWithDoblePath.path1;
-      this.icon.path2 = temporalJSONWithDoblePath.path2;
-      this.icon.path3 = temporalJSONWithDoblePath.path3;
-    }
+      return { paths, path1, path2 };
+    },
   }
 };
 
