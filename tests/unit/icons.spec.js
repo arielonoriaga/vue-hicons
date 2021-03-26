@@ -232,7 +232,7 @@ describe('VueHicons', () => {
       expect(wrapper.vm.$data.icon.path1)
         .toBe(icons.adjustments);
 
-      expect(wrapper.vm.icosSinDoblePath())
+      expect(wrapper.vm.getIconPath())
         .toBe(icons.adjustments);
     });
 
@@ -263,11 +263,15 @@ describe('VueHicons', () => {
       expect(wrapper.vm.$data.doublePath)
         .toBeTruthy();
 
-      expect(wrapper.vm.icosWithDoublePath().path1)
-        .toBe(icons.cog.path1);
+      const { path1, path2 } = wrapper.vm.getDoublePathIcon();
 
-      expect(wrapper.vm.icosWithDoublePath().path2)
-        .toBe(icons.cog.path2);
+      expect(
+        path1
+      ).toBe(icons.cog.path1);
+
+      expect(
+        path2
+      ).toBe(icons.cog.path2);
     });
   });
 
@@ -287,11 +291,13 @@ describe('VueHicons', () => {
 
       wrapper.vm.buildIcon();
 
-      expect(wrapper.vm.$data.icon.path1)
-        .toBe(icons.filled.adjustments);
+      expect(
+        wrapper.vm.$data.icon.path1
+      ).toBe(icons.filled.adjustments);
 
-      expect(wrapper.vm.icosSinDoblePathFilled())
-        .toBe(icons.filled.adjustments);
+      expect(
+        wrapper.vm.getIconPath()
+      ).toBe(icons.filled.adjustments);
     });
 
     it("build icon double path filled", () => {
@@ -305,11 +311,24 @@ describe('VueHicons', () => {
       expect(wrapper.vm.$data.doublePath)
         .toBeTruthy();
 
-      expect(wrapper.vm.icosWithDoublePath().path1)
-        .toBe(icons.filled.currency_dollar.path1);
+      const {
+        path1,
+        path2
+      } = wrapper.vm.getDoublePathIcon();
 
-      expect(wrapper.vm.icosWithDoublePath().path2)
-        .toBe(icons.filled.currency_dollar.path2);
+      const {
+        filled: {
+          currency_dollar
+        }
+      } = icons;
+
+      expect(
+        path1
+      ).toBe(currency_dollar.path1);
+
+      expect(
+        path2
+      ).toBe(currency_dollar.path2);
     });
   });
 
@@ -322,14 +341,29 @@ describe('VueHicons', () => {
 
       wrapper.vm.buildIcon();
 
-      expect(wrapper.vm.icosWithTriplePathFilled().path1)
-        .toBe(icons.filled.database.path1);
+      const {
+        path1,
+        path2,
+        path3
+      } = wrapper.vm.icosWithTriplePathFilled();
 
-      expect(wrapper.vm.icosWithTriplePathFilled().path2)
-        .toBe(icons.filled.database.path2);
+      const {
+        filled: {
+          database
+        }
+      } = icons;
 
-      expect(wrapper.vm.icosWithTriplePathFilled().path3)
-        .toBe(icons.filled.database.path3);
+      expect(
+        path1
+      ).toBe(database.path1);
+
+      expect(
+        path2
+      ).toBe(database.path2);
+
+      expect(
+        path3
+      ).toBe(database.path3);
     });
   });
 });
