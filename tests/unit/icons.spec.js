@@ -40,7 +40,7 @@ describe('VueHicons', () => {
 
     it("classIconFinal", () => {
       expect(iconsComponent.computed.classIconFinal.call(wrapper.vm))
-        .toBe('x  w-4');
+        .toBe('x  w-4 h-4');
     });
 
     it("classIconFinal with other width and class", async () => {
@@ -48,8 +48,7 @@ describe('VueHicons', () => {
         name: "arrow_left",
         isFilled: false,
         classIcon: "bg-red-200",
-        widthIcon: "6",
-        heightIcon: "6"
+        size: "6",
       });
 
       await wrapper.vm.$nextTick();
@@ -208,7 +207,7 @@ describe('VueHicons', () => {
       ).toBe('');
     });
 
-    it("fillRuleTwoPath default value filled", () => {
+    it("fillRuleTwoPath default value filled 2", () => {
       wrapper.setProps({
         isFilled: true,
         name: 'eye',
@@ -280,8 +279,6 @@ describe('VueHicons', () => {
       wrapper.setProps({
         isFilled:true
       });
-
-      iconsComponent.computed.stringIconsJSON.call(wrapper.vm);
     });
 
     it("build icon single path filled", () => {
@@ -302,33 +299,19 @@ describe('VueHicons', () => {
 
     it("build icon double path filled", () => {
       wrapper.setProps({
-        name: "currency_dollar",
+        name: "currency-dollar",
         isFilled: true
       });
 
       wrapper.vm.buildIcon();
 
-      expect(wrapper.vm.$data.doublePath)
-        .toBeTruthy();
-
-      const {
-        path1,
-        path2
-      } = wrapper.vm.getDoublePathIcon();
-
-      const {
-        filled: {
-          currency_dollar
-        }
-      } = icons;
-
       expect(
-        path1
-      ).toBe(currency_dollar.path1);
+        wrapper.vm.$data.doublePath
+      ).toBeTruthy();
 
-      expect(
-        path2
-      ).toBe(currency_dollar.path2);
+      const response = wrapper.vm.getDoublePathIcon();
+
+      expect(response).toStrictEqual(icons.filled.currency_dollar);
     });
   });
 

@@ -1,33 +1,33 @@
 <template>
-  <svg
-    :stroke-width="strokeStyleComponent"
-    :fill="fillStyleComponent"
-    :viewBox="viewBoxComponent"
-    :class="classIconFinal"
-    :stroke="strokeColor"
-    :stroke-linecap="strokeLinecap"
-    :stroke-linejoin="strokeLinejoin"
-    @click="$emit('click')"
-  >
+    <svg
+        :stroke-width="strokeStyleComponent"
+        :fill="fillStyleComponent"
+        :viewBox="viewBoxComponent"
+        :class="classIconFinal"
+        :stroke="strokeColor"
+        :stroke-linecap="strokeLinecap"
+        :stroke-linejoin="strokeLinejoin"
+        @click="$emit('click')"
+    >
 
-    <path
-      :d="icon.path1"
-      :fill-rule="fillRuleBasicPath"
-      :clip-rule="clipRuleBasicPath"
-    />
+        <path
+            :d="icon.path1"
+            :fill-rule="fillRuleBasicPath"
+            :clip-rule="clipRuleBasicPath"
+        />
 
-    <path
-      v-if="doublePath || isTriplePath"
-      :d="icon.path2"
-      :fill-rule="fillRuleTwoPath"
-      :clip-rule="clipRuleTwoPath"
-    />
+        <path
+            v-if="doublePath || isTriplePath"
+            :d="icon.path2"
+            :fill-rule="fillRuleTwoPath"
+            :clip-rule="clipRuleTwoPath"
+        />
 
-    <path
-      v-if="isTriplePath"
-      :d="icon.path3"
-    />
-  </svg>
+        <path
+            v-if="isTriplePath"
+            :d="icon.path3"
+        />
+    </svg>
 </template>
 
 <script>
@@ -82,11 +82,6 @@ export default {
       default: ''
     },
 
-    heightIcon: {
-      type: Number,
-      default: 4
-    },
-
     strokeColor: {
       type: String,
       default: 'currentColor'
@@ -102,11 +97,6 @@ export default {
       default: '0 0 24 24'
     },
 
-    widthIcon: {
-      type: Number,
-      default: 4
-    },
-
     strokeLinecap: {
       type: String,
       default: 'round'
@@ -115,6 +105,11 @@ export default {
     strokeLinejoin: {
       type: String,
       default: 'round'
+    },
+
+    size: {
+      type: [String, Number],
+      default: '4'
     }
   },
 
@@ -125,7 +120,6 @@ export default {
       'path1': '',
       'path2': ''
     },
-    icons: icons,
     iconsWithDoublePath: DoublePathIcons,
     filledIconsWithDoublePath: FilledDoublePathIcons,
     filledIconsWithTriplePaths: TriplePathFilledIcons,
@@ -137,21 +131,17 @@ export default {
     },
 
     classIconFinal () {
-      return this.heightIcon == 4
-        ? `${this.iconNameClass} ${this.classIcon} w-${this.widthIcon}`
-        : `${this.iconNameClass} ${this.classIcon} w-${this.widthIcon} h-${this.heightIcon}`;
+      return `${this.iconNameClass} ${this.classIcon} w-${this.size} h-${this.size}`;
     },
 
     clipRuleData() {
       return this.name == 'volume_off' ? 'evenodd' : this.clipRule;
     },
 
-    stringIconsJSON() {
-      const jsonString = JSON.stringify(this.icons);
-
+    icons() {
       return this.isFilled
-        ? jsonString.split(`"filled":{`)[1]
-        : jsonString;
+        ? icons.filled
+        : icons;
     },
 
     strokeStyleComponent() {
@@ -185,15 +175,23 @@ export default {
     },
 
     fillRuleTwoPath() {
-      return this.isFilled && this.fillRulePath2 === '' && this.filledIconsWithDoublePath.includes(this.name)
+      return this.isFilled && this.fillRulePath2 === '' && this.isDoublePath
         ? 'evenodd'
         : this.fillRulePath2;
     },
 
     clipRuleTwoPath() {
-      return this.isFilled && this.clipRulePath2 === '' && this.filledIconsWithDoublePath.includes(this.name)
+      return this.isFilled && this.clipRulePath2 === '' && this.isDoublePath
         ? this.clipRulePath2
         : 'evenodd';
+    },
+
+    isDoublePath() {
+      return this.filledIconsWithDoublePath.includes(this.nameFormated);
+    },
+
+    nameFormated() {
+      return this.name.toLowerCase().replace('-', '_');
     }
   },
 
@@ -202,14 +200,8 @@ export default {
   },
 
   methods: {
-    normalize(text) {
-      return text.toLowerCase().replace('-', '_');
-    },
-
     buildIcon() {
-      const iconName = this.normalize(this.name);
-
-      this.buildIconStructure(iconName);
+      this.buildIconStructure(this.nameFormated);
     },
 
     buildIconStructure(name) {
@@ -233,9 +225,7 @@ export default {
     },
 
     getIconPath() {
-      return this.stringIconsJSON
-        .split(`"${this.name}":"`)[1]
-        .split('","')[0];
+      return this.icons[this.nameFormated];
     },
 
     buildIconDoublePath() {
@@ -252,27 +242,22 @@ export default {
 
     icosWithTriplePathFilled() {
       const {
-        paths,
         path1,
         path2,
       } = this.getDoublePathIcon();
 
-      const [path3] = paths[1].split('","path3":"')[1].split('"');
+      const path3 = this.icons[this.nameFormated].path3;
 
       return { path1, path2, path3 };
     },
 
     getDoublePathIcon() {
-      const paths = this.stringIconsJSON
-        .split(`"${this.name}":{`)[1]
-        .split(`},"`)[0]
-        .split(`path1":"`)[1]
-        .split('","path2":"');
+      const {
+        path1,
+        path2,
+      } = this.icons[this.nameFormated];
 
-      const [path1] = paths;
-      const [path2] = paths[1].split(`"`);
-
-      return { paths, path1, path2 };
+      return { path1, path2 };
     },
   }
 };

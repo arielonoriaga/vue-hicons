@@ -1,6 +1,6 @@
 const TriplePathFilledIcons = [
-      'database',
-      'finger_print'
+  'database',
+  'finger_print'
 ];
 
 export default TriplePathFilledIcons;
