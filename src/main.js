@@ -1,9 +1,9 @@
 import VueHicons from "./VueHicons.vue";
 
 function install(Vue) {
-  if (install.installed) return;
-  install.installed = true;
-  Vue.component("VueHicons", VueHicons);
+    if (install.installed) return;
+    install.installed = true;
+    Vue.component("VueHicons", VueHicons);
 }
 
 const plugin = { install };
@@ -11,13 +11,13 @@ const plugin = { install };
 let GlobalVue = null;
 
 GlobalVue = typeof window !== "undefined"
-  ? window.Vue
-  : typeof global !== "undefined"
-    ? global.vue
-    : null;
+    ? window.Vue
+    : typeof global !== "undefined"
+        ? global.vue
+        : null;
 
 if (GlobalVue)
-  GlobalVue.use(plugin);
+    GlobalVue.use(plugin);
 
 VueHicons.install = install;
 

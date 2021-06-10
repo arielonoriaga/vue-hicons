@@ -64,31 +64,17 @@ export default {
 | class-icon | String | - | false |
 | clip-rule | String | nonzero | false |
 | clip-rule-path2 | String | - | false |
-| is-filled | Boolean | false | false |
 | fill-color | String | none | false |
 | fill-rule | String | nonzero | false |
 | fill-rule-path2 | String | - | false |
-| height-icon | Number | - | false |
+| is-filled | Boolean | false | false |
 | name | String | x | true |
+| size | String-Number | - | false |
 | stroke-color | String | #000 | false |
 | stroke-linecap | String | round | false |
 | stroke-linejoin | String | round | false |
 | stroke-width | Number | 2 | false |
 | view-box | String | 0 0 24 24 | false |
-| width-icon | Number | 4 | false |
-
-
-### Caution
-
-If icon's name contains a - \(hyphen\) it must be called with _ \(underscore\)
-
-Example:
-
-```vue
-  arrow-left -> arrow_left
-
-  <VueHicons name="arrow_left">
-```
 
 ### How to use filled icons?
 
